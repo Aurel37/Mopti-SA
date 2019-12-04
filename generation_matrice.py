@@ -15,7 +15,7 @@ def gen_matrix(n,W):
                     res[j][i] = 1
     return res
 
-def transition(matrix, X, p_heal, p_infect, heals):
+def transition(matrix, X, p_heal, p_infect):
     """
     matrix is an array that represents a graph
     X is a list of bool that informs if the edge i is sick
@@ -26,27 +26,14 @@ def transition(matrix, X, p_heal, p_infect, heals):
     for i in range(n):
         if (X[i] and uniform(0,1)<p_heal): # proba de s'auto soigner
             X[i] = False
-            heals[i] = 1
         else:
-            if(heals[i] == 0):
-                count_voisin = 0 # nombre de voisin malade 
-                poids = 0 # poids des voisins malade 
-                for j in range(n):
-                    if (matrix[i][j] > 0 and X[j]): # si on est connecté à qlqn de malade 
-                        count_voisin += 1
-                        poids += matrix[i][j]
-                        #print(str(poids) + ' = poids, count_voisin =' + str(count_voisin))
-                if (count_voisin >0 and uniform(0,1)<(p_infect*poids)/count_voisin):
-                            X[i] = True
-                            print('yes')
+            count_voisin = 0 # nombre de voisin malade 
+            poids = 0 # poids des voisins malade 
+            for j in range(n):
+                if (matrix[i][j] > 0 and X[j]): # si on est connecté à qlqn de malade 
+                    count_voisin += 1
+                    poids += matrix[i][j]
+            if (count_voisin >0 and uniform(0,1)<(p_infect*poids)/count_voisin):
+                        X[i] = True
 def w(x,y):
     return (x+y)/2
-
-G = gen_matrix(5,w)
-
-X = [True, False, False, True, True]
-heals = [0, 0, 0, 0, 0]
-
-transition(G, X, 0.5, 0.7, heals)
-
-print(X)
