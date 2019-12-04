@@ -20,16 +20,16 @@ def simulation(n_pop, p_heal, p_infect, p_sick, W):
                 test += 1
                 
         counter += 1
-        print(counter)
-        print('On a guérit '+ str(test)+' sur ' + str(n_pop))
+        #print(counter)
+        #print('On a guérit '+ str(test)+' sur ' + str(n_pop))
     return counter 
 
 def moyenne_ta(n_tests, n_pop, p_heal, p_infect, p_sick, W):
     s = 0
     for i in range(n_tests):
-        print(s)
+        #print(s)
         s += simulation(n_pop, p_heal, p_infect, p_sick, W)
-        print('Guerrrrrrrrrrrrrrrit')
+        #print('Guerrrrrrrrrrrrrrrit')
     return s/n_tests
 
-print(moyenne_ta(10, 30,  0.5, 0.1, 1, w))
+print(moyenne_ta(100, 30,  0.5, 0.1, 1, w))
