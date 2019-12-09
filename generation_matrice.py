@@ -1,5 +1,7 @@
-from random import uniform
+from random import uniform, shuffle
 import numpy as np
+#False : heal, True : sick
+
 
 def gen_vect(n_pop, p_sick):
     X = []
@@ -29,74 +31,48 @@ def transition(matrix, X, p_heal, p_infect):
     matrix is an array that represents a graph
     X is a list of bool that informs if the edge i is sick
 
-    The function realize one transition of the graph 
+    The function realize one transition of the graph
     """
     n = len(matrix)
     for i in range(n):
         if (X[i] and uniform(0,1)<p_heal): # proba de s'auto soigner
             X[i] = False
         else:
-<<<<<<< HEAD
-            if(heals[i] == 0):
-                count_voisin = 0 # nombre de voisin malade 
-                poids = 0 # poids des voisins malade 
-                for j in range(n):
-                    if (matrix[i][j] > 0 and X[j]): # si on est connecté à qlqn de malade 
-                        count_voisin += 1
-                        poids += matrix[i][j]
-                        #print(str(poids) + ' = poids, count_voisin =' + str(count_voisin))
-                if (count_voisin >0 and uniform(0,1)<(p_infect*poids)/count_voisin):
-                            X[i] = True
-                            print('yes')
-
-def vaccin_rand(X, m, matrix, mu_vaccin):
-    n = len(X)
-    l_n = [i for i in range(n)]
-    shuffle(l_n)
-    for i in l_n:
-        if (uniform(0,1) < mu_vaccin):
-            X[i] = False
-            for p in range(len(matrix)):
-                for k in range(len(matrix)):
-                    if (matrix[p][k]>0):
-                        matrix[p][k] = 0;
-
-def w(x,y):
-    return (x+y)/2
-
-G = gen_matrix(5,w)
-
-X = [True, False, False, True, True]
-heals = [0, 0, 0, 0, 0]
-
-vaccin_rand(X, 2, G, 0.08)
-print(X)
-print(G)
-
-print(X)
-=======
             count_voisin = 0 # nombre de voisin malade 
             poids = 0 # poids des voisins malade 
             for j in range(n):
                 if (matrix[i][j] > 0 and X[j]): # si on est connecté à qlqn de malade 
                     count_voisin += 1
                     poids += matrix[i][j]
+                        #print(str(poids) + ' = poids, count_voisin =' + str(count_voisin))
             if (count_voisin >0 and uniform(0,1)<(p_infect*poids)/count_voisin):
-                        X[i] = True
+                X[i] = True
 
-
-def vaccin_rand(X, m, matrix, mu_vaccin):
-    n = len(X)
+def vaccin_rand(m, matrix, mu_vaccin):
+    n = len(matrix)
+    X = [True for i in range(n)]
     l_n = [i for i in range(n)]
     shuffle(l_n)
-    for i in l_n:
+    count = 0 #count number of people vaccinated
+    itera = 0
+    while count != m:
+        i = l_n[itera%n]
+        itera += 1
         if (uniform(0,1) < mu_vaccin):
             X[i] = False
+            count += 1
             for p in range(len(matrix)):
                 for k in range(len(matrix)):
                     if (matrix[p][k]>0):
                         matrix[p][k] = 0;
+    return X
 
 def w(x,y):
     return (x+y)/2
->>>>>>> 14594e5f16c448ab51dab3c5fef42e494c3f45f0
+
+
+#test
+
+m = gen_matrix(5, w)
+
+print(vaccin_rand(3, m, 0.5))
