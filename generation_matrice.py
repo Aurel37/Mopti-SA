@@ -83,6 +83,20 @@ print(X)
                     poids += matrix[i][j]
             if (count_voisin >0 and uniform(0,1)<(p_infect*poids)/count_voisin):
                         X[i] = True
+
+
+def vaccin_rand(X, m, matrix, mu_vaccin):
+    n = len(X)
+    l_n = [i for i in range(n)]
+    shuffle(l_n)
+    for i in l_n:
+        if (uniform(0,1) < mu_vaccin):
+            X[i] = False
+            for p in range(len(matrix)):
+                for k in range(len(matrix)):
+                    if (matrix[p][k]>0):
+                        matrix[p][k] = 0;
+
 def w(x,y):
     return (x+y)/2
 >>>>>>> 14594e5f16c448ab51dab3c5fef42e494c3f45f0
