@@ -37,8 +37,8 @@ def transition(matrix, X, p_heal, p_infect):
                         X[i] = True
 
 
-def vaccin_rand(X, m, matrix, mu_vaccin):
-    n = len(X)
+def vaccin_rand(n, m, matrix, mu_vaccin):
+    X = [False for i in range(N)] 
     l_n = [i for i in range(n)]
     shuffle(l_n)
     for i in l_n:
