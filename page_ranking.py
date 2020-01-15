@@ -1,32 +1,70 @@
 import numpy as np
 from generation_matrice import gen_matrix, w
 
-def page_ranking(A, m,  X):
-    val_propres, vect_propres = np.linalg.eig(A)
-    n = len(A)
-    edges = []
-    val_sorted = []
+def soustraction(u0, u1):
+    print('u0  ', u0)
+    print(u1)
+    n = len(u0)
+    res = []
     for i in range(n):
-        val_sorted.append((abs(val_propres[i]), vect_propres[i]))
-    #print(val_sorted)
-    val_sorted = sorted(val_sorted, key=lambda colonnes: colonnes[0])
-    vect_principal = val_sorted[0][1]
-    vect_sorted = []
-    for i in range(n):
-        vect_sorted.append((abs(vect_principal[i]), i))
-    vect_sorted = sorted(vect_sorted, key=lambda colonnes: colonnes[0])
-    #print(vect_sorted)
-    for i in range(n-1, n-m-1, -1):
-        edges.append(vect_sorted[i])
-    print(edges)
-    for i in edges:
-        X[i] = True
-        for j in range(n):
-            A[i][j] = 0
-            A[j][i] = 0
+        res.append(u0[i] - u1[i])
+    return res
 
-m = gen_matrix(5, w)
-print(m)
-page_ranking(m, 2)
+def copie_vect(u):
+    res = []
+    for i in u:
+        res.append(i)
+    return res
+
+def norme(u):
+    res = 0
+    n = len(u)
+    for i in range(n):
+        res += u[i]**2
+    return res**(1/2)
+
+def somme_ligne_i(A,i):
+    res = 0
+    n = len(A)
+    for k in range(n):
+        res += A[i,k]
+    return res
+
+def normalisation(A):
+    n = len(A)
+    RES = np.zeros((n,n))
+    for i in range(n):
+        somme = somme_ligne_i(A,i)
+        for j in range(n):
+            if (somme != 0):
+                RES[i,j] = A[i,j]/somme
+    return RES
+
+def page_ranking(A, m, X, seuil):
+    n = len(A)
+    u0 = [1 for i in range(n)]
+    u1 = [0 for i in range(n)]
+    B = normalisation(A)
+    while (norme(soustraction(u0, u1)) > seuil):
+        u1 = copie_vect(u0)
+        u0 = np.dot(B, u0)
+        u0 = u0/norme(u0)
+    indice = []
+    propre_indice = []
+    for i in range(n):
+        propre_indice.append((abs(u0[i]), i))
+    propre_indice = sorted(propre_indice, key = lambda colonnes: colonnes[0])
+    for i in range(m):
+        indice = propre_indice[i][1]
+        X[indice] = True
+        for j in range(n):
+            A[indice][j] = 0
+            A[i][indice] = 0
+
+A = gen_matrix(5, w)
+X = [True, False, True, False, False]
+print(A)
+page_ranking(A, 2, X, 0.1)
+print(A)
 
 
