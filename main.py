@@ -1,7 +1,15 @@
-from generation_matrice import w, gen_matrix
-from temps_arret import moyenne_ta
+from temps_arret import main
+import numpy as np
+import matplotlib.pyplot as plt
+from generation_matrice import gen_matrix, w
 
 N = 30
-X = [True for i in range(N)]
+X = np.linspace(0.2, 0.5, 20)
+Y = np.linspace(0.2, 0.5, 20)
 graph = gen_matrix(N, w)
-print(moyenne_ta(10, N,  0.1, 0.1, X, graph))
+for i in range(20):
+    Y[i] = main(N, 10, 0.5, X[i], graph)
+plt.plot(X, Y)
+plt.show()
+
+

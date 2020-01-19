@@ -1,5 +1,10 @@
-from random import uniform
+from random import uniform, shuffle
 import numpy as np
+
+
+def w(x,y):
+    return (x+y)/2
+
 
 def gen_matrix(n,W):
     """
@@ -14,6 +19,7 @@ def gen_matrix(n,W):
                     res[i][j] = 1
                     res[j][i] = 1
     return res
+
 
 def transition(matrix, X, p_heal, p_infect):
     """
@@ -37,17 +43,23 @@ def transition(matrix, X, p_heal, p_infect):
                         X[i] = True
 
 
-def vaccin_rand(n, m, matrix, mu_vaccin):
-    X = [False for i in range(N)] 
+def vaccin_rand(m, matrix, mu_vaccin):
+    n = len(matrix)
+    X = [True for i in range(n)]
     l_n = [i for i in range(n)]
     shuffle(l_n)
-    for i in l_n:
+    count = 0 #count number of people vaccinated
+    itera = 0
+    while count != m:
+        i = l_n[itera%n]
+        itera += 1
         if (uniform(0,1) < mu_vaccin):
             X[i] = False
-            for p in range(len(matrix)):
-                for k in range(len(matrix)):
-                    if (matrix[p][k]>0):
-                        matrix[p][k] = 0;
+            count += 1
+            for k in range(len(matrix)):
+                if (matrix[i][k]>0):
+                    matrix[i][k] = 0
+                    matrix[k][i] = 0
+    return X
 
-def w(x,y):
-    return (x+y)/2
+
