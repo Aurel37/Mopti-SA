@@ -7,7 +7,7 @@ N = 30
 X = np.linspace(0.2, 0.5, 20)
 Y = np.linspace(0.2, 0.5, 20)
 graph = gen_matrix(N, w)
-for i in range(20):
+for i in range(1):
     Y[i] = main(N, 10, 0.5, X[i], graph)
 plt.plot(X, Y)
 plt.show()
