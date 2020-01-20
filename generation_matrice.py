@@ -12,6 +12,11 @@ def gen_vect(n_pop, p_sick):
             X.append(False)
     return X
 
+
+def w(x,y):
+    return (x+y)/2
+
+
 def gen_matrix(n,W):
     """
     n in an integer that represent the number of edges of the graph
@@ -25,6 +30,7 @@ def gen_matrix(n,W):
                     res[i][j] = 1
                     res[j][i] = 1
     return res
+
 
 def transition(matrix, X, p_heal, p_infect):
     """
@@ -63,16 +69,6 @@ def vaccin_rand(m, matrix, mu_vaccin):
             count += 1
             for k in range(len(matrix)):
                 if (matrix[i][k]>0):
-                    matrix[i][k] = 0;
-                    matrix[k][i] = 0;
+                    matrix[i][k] = 0
+                    matrix[k][i] = 0
     return X
-
-def w(x,y):
-    return (x+y)/2
-
-
-#test
-
-m = gen_matrix(5, w)
-
-print(vaccin_rand(3, m, 0.5))
