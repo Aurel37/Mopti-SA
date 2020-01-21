@@ -1,14 +1,14 @@
 import numpy as np
 from generation_matrice import gen_matrix, w
 
+
 def soustraction(u0, u1):
-    print('u0  ', u0)
-    print(u1)
     n = len(u0)
     res = []
     for i in range(n):
         res.append(u0[i] - u1[i])
     return res
+
 
 def copie_vect(u):
     res = []
@@ -16,7 +16,9 @@ def copie_vect(u):
         res.append(i)
     return res
 
+
 def norme(u):
+    test = 0
     res = 0
     n = len(u)
     for i in range(n):
@@ -48,9 +50,11 @@ def page_ranking(A, m, X, seuil):
     while (norme(soustraction(u0, u1)) > seuil):
         u1 = copie_vect(u0)
         u0 = np.dot(B, u0)
+        print('inside', u0)
         u0 = u0/norme(u0)
     indice = []
     propre_indice = []
+    print("u0_end", u0)
     for i in range(n):
         propre_indice.append((abs(u0[i]), i))
     propre_indice = sorted(propre_indice, key = lambda colonnes: colonnes[0])
@@ -64,7 +68,7 @@ def page_ranking(A, m, X, seuil):
 A = gen_matrix(5, w)
 X = [True, False, True, False, False]
 print(A)
-page_ranking(A, 2, X, 0.1)
+page_ranking(A, 2, X, 0.01)
 print(A)
 
 
