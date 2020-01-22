@@ -1,4 +1,5 @@
 from generation_matrice import gen_matrix, transition, w, uniform, vaccin_rand
+import multiprocessing
 
 def simulation(n_pop, p_heal, p_infect, X, graph):
     healed = False
@@ -7,31 +8,30 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
         transition(graph, X, p_heal, p_infect)
         healed = True
         test= 0
-        for j in X:
+        for j in X: 
             healed = healed and not j
             if not j:
                 test += 1
+                
         counter += 1
-<<<<<<< HEAD
-        #print(counter)
-        #print('On a guérit '+ str(test)+' sur ' + str(n_pop))
-    return counter
-=======
     return counter 
->>>>>>> sebastien
+
 
 def moyenne_ta(n_tests, n_pop, p_heal, p_infect, graph):
+    
     s = 0
     mu_vaccin = 0.5
     X = vaccin_rand(0, graph, mu_vaccin)
-    for i in range(n_tests):
-        s += simulation(n_pop, p_heal, p_infect, X, graph)
-    print("fini ...")
+    pool = multiprocessing.Pool(4)
+    liste = [[n_pop, p_heal, p_infect, X, graph] for _ in range(n_tests)]
+    res = pool.map(simulation, liste)
+    for i in res:
+        s += i
     return s/n_tests
 
 def main(N,n_test, p_heal, p_infect, graph):
     s = 0
-    for n in range(n_test):
+    for n in range(1):
         s += moyenne_ta(n_test, N, p_heal, p_infect, graph)
     print("fini")
     return s/n_test
