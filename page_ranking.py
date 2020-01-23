@@ -44,27 +44,37 @@ def normalisation(A):
     return RES
 
 
-def page_ranking(Weight_mat, m, X, seuil):
-    n = len(A)
+def page_ranking(Link_mat, people_vac, X_vac, seuil):
+    """
+    DESCRIPTION
+
+    Perform the PageRanking algorithm on the adjacency matrix Link_mat, return 
+    the new adjacency matrix
+
+    VARIABLES
+
+    Link_mat : a square matrix representing a graph
+    people_vac : number of people to remove from the graph
+    X_vac : a vector of True, if the edge i is removed from the graph, 
+    the vertex i turns to False
+    seuil : a float mesure
+    """
+    n = len(Link_mat)
     u0 = [1 for i in range(n)]
     u1 = [0 for i in range(n)]
-    Weight_mat_n = normalisation(Weight_mat)
+    Link_mat_n = normalisation(Link_mat)
     while (norme(soustraction(u0, u1)) > seuil):
         u1 = copie_vect(u0)
-        print(Weight_mat_n)
-        u0 = np.dot(Weight_mat_n, u0)
-        print('inside', u0)
+        u0 = np.dot(Link_mat_n, u0)
         u0 = u0/norme(u0)
     indice = []
     propre_indice = []
-    print("u0_end", u0)
     for i in range(n):
         propre_indice.append((abs(u0[i]), i))
     propre_indice = sorted(propre_indice, key=lambda colonnes: colonnes[0])
-    for i in range(n-1, n-m-1, -1):
+    for i in range(n-1, n-people_vac-1, -1):
         indice = propre_indice[i][1]
-        X[indice] = True
+        X_vac[indice] = False
         for j in range(n):
-            A[indice][j] = 0
-            A[j][indice] = 0
-
+            Link_mat[indice][j] = 0
+            Link_mat[j][indice] = 0

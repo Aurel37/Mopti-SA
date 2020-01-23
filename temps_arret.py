@@ -4,13 +4,14 @@ from page_ranking import page_ranking
 def simulation(n_pop, p_heal, p_infect, X, graph):
     healed = False
     counter = 0
+    X_healed = [X[i] for i in range(len(X))]
+    
     while(not healed):
-        transition(graph, X, p_heal, p_infect)
+        transition(graph, X, p_heal, p_infect, X_healed)
         healed = True
         for j in X:
             healed = healed and not j
         counter += 1
-        print(counter)
 
     return counter 
 
@@ -19,16 +20,22 @@ def moyenne_ta_alea(n_tests, n_pop, p_heal, p_infect, graph, nb_vacc):
     mu_vaccin = 0.5
     X = vaccin_rand(nb_vacc, graph, mu_vaccin)
     for i in range(n_tests):
-        print(i)
         s += simulation(n_pop, p_heal, p_infect, X, graph)
     print("fini ...")
     return s/n_tests
 
-def vaccin_rank(n_tests, n_pop, p_heal, p_infect, graph, nb_vacc):
-
-def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
+def main_alea(N,n_test, p_heal, p_infect, graph, nb_vacc):
     s = 0
     for n in range(n_test):
         s += moyenne_ta_alea(n_test, N, p_heal, p_infect, graph, nb_vacc)
-    print("fini")
+        
+    return s/n_test
+
+def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
+    
+    s = 0
+    X = [ True for i in range(N)]
+    page_ranking(graph, nb_vacc, X, 0.1)
+    for n in range(n_test):
+        s += simulation(N, p_heal, p_infect, X, graph)
     return s/n_test
