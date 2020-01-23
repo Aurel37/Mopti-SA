@@ -1,6 +1,6 @@
 import numpy as np
 from generation_matrice import gen_matrix, w
-
+from graphic import *
 
 def soustraction(u0, u1):
     n = len(u0)
@@ -44,18 +44,18 @@ def normalisation(A):
     return RES
 
 
-def page_ranking(Link_mat, people_vac, X_vac, seuil):
+def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
     """
     DESCRIPTION
 
-    Perform the PageRanking algorithm on the adjacency matrix Link_mat, return 
+    Perform the PageRanking algorithm on the adjacency matrix Link_mat, return
     the new adjacency matrix
 
     VARIABLES
 
     Link_mat : a square matrix representing a graph
     people_vac : number of people to remove from the graph
-    X_vac : a vector of True, if the edge i is removed from the graph, 
+    X_vac : a vector of True, if the edge i is removed from the graph,
     the vertex i turns to False
     seuil : a float mesure
     """
@@ -84,8 +84,10 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil):
             Link_mat[j][indice] = 0
 
 
-#A = gen_matrix(10, w)
-#X = [True for i in range(10)]
-#print(A)
-#page_ranking(A, 2, X, 0.1)
-#print(A)
+A = gen_matrix(10, w)
+affiche_graph(A)
+X = [True for i in range(10)]
+print(A)
+page_ranking(A, 2, X, 0.1)
+affiche_graph(A)
+plt.show()

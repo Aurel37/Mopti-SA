@@ -12,13 +12,8 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
             if not j:
                 test += 1
         counter += 1
-<<<<<<< HEAD
-        #print(counter)
-        #print('On a guérit '+ str(test)+' sur ' + str(n_pop))
-    return counter
-=======
-    return counter 
->>>>>>> sebastien
+     return counter
+
 
 def moyenne_ta(n_tests, n_pop, p_heal, p_infect, graph):
     s = 0
@@ -29,9 +24,20 @@ def moyenne_ta(n_tests, n_pop, p_heal, p_infect, graph):
     print("fini ...")
     return s/n_tests
 
-def main(N,n_test, p_heal, p_infect, graph):
-    s = 0
+def main(N, n_test, p_heal, p_infect, graph):
+    """
+    Main effectue le test sur graph, renvoie la moyenne et variance en fonction du nombre de personne vaccine
+    """
+    est_moy = 0
+    list_moy = []
+    var = 0
     for n in range(n_test):
-        s += moyenne_ta(n_test, N, p_heal, p_infect, graph)
+        m_i = moyenne_ta(n_test, N, p_heal, p_infect, graph)
+        list_moy.append(m_i)
+        est_moy += m_i
+    est_moy = est_moy/n_test
+    for n in range(n_test):
+        var += (est_moy - est_moy)**2
+    var = var/n_test
     print("fini")
-    return s/n_test
+    return (est_moy, pow(var, 1/2))

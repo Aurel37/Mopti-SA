@@ -12,13 +12,12 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
             healed = healed and not j
             if not j:
                 test += 1
-                
+ 
         counter += 1
     return counter 
 
 
 def moyenne_ta(n_tests, n_pop, p_heal, p_infect, graph):
-    
     s = 0
     mu_vaccin = 0.5
     X = vaccin_rand(0, graph, mu_vaccin)
