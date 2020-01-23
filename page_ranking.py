@@ -44,17 +44,19 @@ def normalisation(A):
     return RES
 
 
-def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
+def page_ranking(Link_mat, people_vac, X_vac, seuil):
     """
     DESCRIPTION
 
-    Perform the PageRanking algorithm on the adjacency matrix Link_mat, return the new adjacency matrix
+    Perform the PageRanking algorithm on the adjacency matrix Link_mat, return 
+    the new adjacency matrix
 
     VARIABLES
 
     Link_mat : a square matrix representing a graph
     people_vac : number of people to remove from the graph
-    X_vac : a vector of True, if the edge i is removed from the graph, the vertex i turns to False
+    X_vac : a vector of True, if the edge i is removed from the graph, 
+    the vertex i turns to False
     seuil : a float mesure
     """
     n = len(Link_mat)
@@ -78,12 +80,12 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
         indice = propre_indice[i][1]
         X_vac[indice] = False
         for j in range(n):
-            A[indice][j] = 0
-            A[j][indice] = 0
+            Link_mat[indice][j] = 0
+            Link_mat[j][indice] = 0
 
 
-A = gen_matrix(10, w)
-X = [True for i in range(10)]
-print(A)
-page_ranking(A, 2, X, 0.1)
-print(A)
+#A = gen_matrix(10, w)
+#X = [True for i in range(10)]
+#print(A)
+#page_ranking(A, 2, X, 0.1)
+#print(A)
