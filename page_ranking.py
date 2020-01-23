@@ -1,5 +1,5 @@
 import numpy as np
-from generation_matrice import gen_matrix, w
+
 
 
 def soustraction(u0, u1):
@@ -68,9 +68,3 @@ def page_ranking(Weight_mat, m, X, seuil):
             A[indice][j] = 0
             A[j][indice] = 0
 
-
-A = gen_matrix(10, w)
-X = [False for i in range(10)]
-print(A)
-page_ranking(A, 2, X, 0.1)
-print(A)
