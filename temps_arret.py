@@ -4,15 +4,12 @@ from page_ranking import page_ranking
 def simulation(n_pop, p_heal, p_infect, X, graph):
     healed = False
     counter = 0
-    X_healed = [X[i] for i in range(len(X))]
-    
     while(not healed):
-        transition(graph, X, p_heal, p_infect, X_healed)
+        transition(graph, X, p_heal, p_infect)
         healed = True
         for j in X:
             healed = healed and not j
         counter += 1
-
     return counter 
 
 def moyenne_ta_alea(n_tests, n_pop, p_heal, p_infect, graph, nb_vacc):
@@ -36,6 +33,9 @@ def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
     s = 0
     X = [ True for i in range(N)]
     page_ranking(graph, nb_vacc, X, 0.1)
+    X_save = [X[i] for i in range(N)]
     for n in range(n_test):
+        print(n)
+        X = [X_save[i] for i in range(N)]
         s += simulation(N, p_heal, p_infect, X, graph)
     return s/n_test
