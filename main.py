@@ -4,13 +4,20 @@ import matplotlib.pyplot as plt
 from generation_matrice import gen_matrix, w
 
 N = 30
-X = np.linspace(0.2, 0.5, 20)
-Y = np.linspace(0.2, 0.5, 20)
+l = 0.5
+dt = 0.0001
+ntests = 1000
+
+X = [i for i in range(1, 5)]
+Y = [i for i in range(1, 5)]
+Yerr = []
 graph = gen_matrix(N, w)
-for i in range(1):
-    Y[i] = main(N, 10, 0.5, X[i], graph)
-plt.plot(X, Y)
+print(X)
+for i in range(len(X)):
+    print(i)
+    res = main(N, ntests, l*dt, dt, graph, X[i])
+    Y[i] = res[0]
+    Yerr.append(res[1])
+
+plt.errorbar(X, Y, Yerr)
 plt.show()
-
-print(moyenne_ta(10, 30,  0.5, 0.1, 1, w))
-

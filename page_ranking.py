@@ -1,6 +1,8 @@
 import numpy as np
+
 from generation_matrice import gen_matrix, w
 from graphic import *
+
 
 def soustraction(u0, u1):
     n = len(u0)
@@ -65,17 +67,13 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
     Link_mat_n = normalisation(Link_mat)
     while (norme(soustraction(u0, u1)) > seuil):
         u1 = copie_vect(u0)
-        print(Link_mat_n)
         u0 = np.dot(Link_mat_n, u0)
-        print('inside', u0)
         u0 = u0/norme(u0)
     indice = []
     propre_indice = []
-    print("u0_end", u0)
     for i in range(n):
         propre_indice.append((abs(u0[i]), i))
     propre_indice = sorted(propre_indice, key=lambda colonnes: colonnes[0])
-    print('indices', propre_indice)
     for i in range(n-1, n-people_vac-1, -1):
         indice = propre_indice[i][1]
         X_vac[indice] = False
@@ -83,11 +81,3 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
             Link_mat[indice][j] = 0
             Link_mat[j][indice] = 0
 
-
-A = gen_matrix(10, w)
-affiche_graph(A)
-X = [True for i in range(10)]
-print(A)
-page_ranking(A, 2, X, 0.1)
-affiche_graph(A)
-plt.show()
