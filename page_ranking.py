@@ -3,7 +3,6 @@ import numpy as np
 from generation_matrice import gen_matrix, w
 from graphic import *
 
-
 def soustraction(u0, u1):
     n = len(u0)
     res = []
@@ -68,7 +67,8 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
     while (norme(soustraction(u0, u1)) > seuil):
         u1 = copie_vect(u0)
         u0 = np.dot(Link_mat_n, u0)
-        u0 = u0/norme(u0)
+        if norme(u0) != 0:
+            u0 = u0/norme(u0)
     indice = []
     propre_indice = []
     for i in range(n):

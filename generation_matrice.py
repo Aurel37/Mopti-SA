@@ -32,7 +32,7 @@ def gen_matrix(n,W):
     return res
 
 
-def transition(matrix, X, p_heal, p_infect, X_healed):
+def transition(matrix, X, p_heal, p_infect):
     """
     matrix is an array that represents a graph
     X is a list of bool that informs if the edge i is sick
@@ -41,18 +41,17 @@ def transition(matrix, X, p_heal, p_infect, X_healed):
     """
     n = len(matrix)
     for i in range(n):
-        if (X[i] and uniform(0,1)<p_heal): # proba de s'auto soigner
+        if (uniform(0,1)<p_heal): # proba de s'auto soigner
             X[i] = False
-            X_healed[i] = False
         else:
             count_voisin = 0 # nombre de voisin malade 
             poids = 0 # poids des voisins malade 
             for j in range(n):
-                if (matrix[i][j] > 0 and X[j] and X_healed[i]): # si on est connecté à qlqn de malade 
+                if (matrix[i][j] > 0 and X[j]): # si on est connecté à qlqn de malade 
                     count_voisin += 1
                     poids += matrix[i][j]
                         #print(str(poids) + ' = poids, count_voisin =' + str(count_voisin))
-            if (count_voisin >0 and uniform(0,1)<(p_infect*poids)/count_voisin):
+            if (count_voisin >0 and uniform(0,1)<p_infect*poids/n):
                 X[i] = True
 
 def vaccin_rand(m, matrix, mu_vaccin):
@@ -73,3 +72,25 @@ def vaccin_rand(m, matrix, mu_vaccin):
                     matrix[i][k] = 0
                     matrix[k][i] = 0
     return X
+
+
+def vaccin_degres(m, matrix):
+    n = len(matrix)
+    X = [True for i in range(n)]
+    degres = [0 for i in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if matrix[i][j] > 0:
+                degres[i] += 1
+
+    vacc = []
+    while len(vacc) < m:
+        max = 0
+        imax = 0
+        for i in range(len(degres)):
+            if not i in vacc:
+                if degres > max:
+                    imax = i
+                    max = degres
+        vacc.append(i)
+                
