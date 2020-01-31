@@ -6,8 +6,8 @@ from generation_matrice import gen_matrix, w
 N = 30
 l = 0.5
 mu = 0.2
-dt = 0.01
-ntests = 100
+dt = 1
+ntests = 1000
 
 X = [i for i in range(1, 10)]
 Y = [i for i in range(1, 10)]

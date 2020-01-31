@@ -35,7 +35,6 @@ def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
     page_ranking(graph, nb_vacc, X, 0.1)
     X_save = [X[i] for i in range(N)]
     for n in range(n_test):
-        print(n)
         X = [X_save[i] for i in range(N)]
         s += simulation(N, p_heal, p_infect, X, graph)
     return s/n_test

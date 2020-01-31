@@ -71,6 +71,7 @@ def vaccin_rand(m, matrix, mu_vaccin):
                 if (matrix[i][k]>0):
                     matrix[i][k] = 0
                     matrix[k][i] = 0
+    
     return X
 
 

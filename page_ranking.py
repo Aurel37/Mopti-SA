@@ -63,6 +63,7 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil):
     u1 = [0 for i in range(n)]
     Link_mat_n = normalisation(Link_mat)
     while (norme(soustraction(u0, u1)) > seuil):
+        print(soustraction(u0, u1))
         u1 = copie_vect(u0)
         u0 = np.dot(Link_mat_n, u0)
         if norme(u0) != 0:
@@ -78,3 +79,36 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil):
         for j in range(n):
             Link_mat[indice][j] = 0
             Link_mat[j][indice] = 0
+
+    print("found it")
+
+
+
+def plus_grand_degres(Link_mat, people_vac, X_vac):
+    n = len(Link_mat)
+    deg = [0 for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if Link_mat[i][j] > 0:
+                deg[i] += 1
+
+    vacc = []
+    while(len(vacc) < people_vac):
+        maxi = - 1
+        imax = - 1
+        for i in range(n):
+            if not i in vacc:
+                if deg[i] > maxi:
+                    imax = i
+                    maxi = deg[i]
+
+                    
+        vacc.apped(imax)
+        for j in rannge(n):
+            Link_mat[imax][j] = 0
+            Link_mat[j][imax] = 0
+        deg = [0 for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                if Link_mat[i][j] > 0:
+                    deg[i] += 1
