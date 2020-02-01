@@ -10,7 +10,9 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
         for j in X:
             healed = healed and not j
         counter += 1
-    return counter 
+
+    return counter
+
 
 def moyenne_ta_alea(n_tests, n_pop, p_heal, p_infect, graph, nb_vacc):
     s = 0
@@ -21,20 +23,39 @@ def moyenne_ta_alea(n_tests, n_pop, p_heal, p_infect, graph, nb_vacc):
     print("fini ...")
     return s/n_tests
 
-def main_alea(N,n_test, p_heal, p_infect, graph, nb_vacc):
-    s = 0
+def main_alea(N, n_test, p_heal, p_infect, graph):
+    """
+    Main effectue le test sur graph, renvoie la moyenne et variance en fonction du nombre de personne vaccine pour la methode aleatoire
+    """
+    est_moy = 0
+    list_moy = []
+    var = 0
     for n in range(n_test):
-        s += moyenne_ta_alea(n_test, N, p_heal, p_infect, graph, nb_vacc)
-        
-    return s/n_test
+        m_i = moyenne_ta(n_test, N, p_heal, p_infect, graph)
+        list_moy.append(m_i)
+        est_moy += m_i
+    est_moy = est_moy/n_test
+    for i in range(n_test):
+        var += (list_moy[i] - est_moy)**2
+    var = var/n_test
+    print("fini")
+    return (est_moy, pow(var, 1/2))
 
 def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
-    
-    s = 0
-    X = [ True for i in range(N)]
+    est_moy = 0
+    list_el = []
+    var = 0
+    X = [True for i in range(N)]
     page_ranking(graph, nb_vacc, X, 0.1)
     X_save = [X[i] for i in range(N)]
     for n in range(n_test):
         X = [X_save[i] for i in range(N)]
-        s += simulation(N, p_heal, p_infect, X, graph)
-    return s/n_test
+        s_i = simulation(N, p_heal, p_infect, X, graph)
+        list_el.append(s_i)
+        est_moy += s_i
+    est_moy = est_moy/n_test
+    for i in range(n_test):
+        var += (list_el[i] - est_moy)**2
+    var = var/n
+    return [est_moy, pow(var, 1/2)]
+
