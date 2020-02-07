@@ -1,5 +1,6 @@
 from generation_matrice import gen_matrix, transition, w, uniform, vaccin_rand
-from page_ranking import page_ranking
+from page_ranking import page_ranking, plus_grand_degres, vaccine
+import numpy as np
 
 def simulation(n_pop, p_heal, p_infect, X, graph):
     healed = False
@@ -46,7 +47,8 @@ def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
     list_el = []
     var = 0
     X = [True for i in range(N)]
-    page_ranking(graph, nb_vacc, X, 0.1)
+    page_ranking(graph, 1, X, 0.1)
+    #plus_grand_degres(graph, 1, X)
     X_save = [X[i] for i in range(N)]
     for n in range(n_test):
         X = [X_save[i] for i in range(N)]
@@ -56,6 +58,40 @@ def main(N,n_test, p_heal, p_infect, graph, nb_vacc):
     est_moy = est_moy/n_test
     for i in range(n_test):
         var += (list_el[i] - est_moy)**2
-    var = var/n
-    return [est_moy, pow(var, 1/2)]
+    var = var/n_test
+    return [est_moy, var]
 
+def main_glouton(N, n_test, p_heal, p_infect, graph, X):
+    temps_min = 100000000
+    var_min = 0
+    i_min = 0
+    for i in range(N):
+        if X[i]:
+            print(i)
+            graph_copie = np.zeros((N,N))
+            for j in range(N):
+                for k in range(N):
+                    graph_copie[j][k] = graph[j][k]
+            Xs = [X[i] for i in range(N)]
+            vaccine(graph_copie, i, Xs)
+            X_save = [Xs[i] for i in range(N)]
+            est_moy = 0
+            list_el = []
+            var = 0
+            for n in range(n_test):
+                Xss = [X_save[i] for i in range(N)]
+                s_i = simulation(N, p_heal, p_infect, Xss, graph)
+                list_el.append(s_i)
+                est_moy += s_i
+            est_moy = est_moy/n_test
+            for j in range(n_test):
+                var += (list_el[j] - est_moy)**2
+            var = var/n_test
+            if(est_moy < temps_min):
+                i_min = i
+                temps_min = est_moy
+                var_min = var
+    vaccine(graph, i_min, X)
+    return temps_min, var
+        
+        
