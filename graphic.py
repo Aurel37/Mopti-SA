@@ -9,7 +9,7 @@ def affiche_graph(Link_mat,X):
     n = len(Link_mat)
     Graph_print = nx.Graph()
     node_col = ['green' if not i else 'red' for i in X]
-    edge_col = []
+    edge_col = ['red' for i in X]
     for i in range(n):
         for j in range(n):
             if X[i] or X[j]:
@@ -21,7 +21,7 @@ def affiche_graph(Link_mat,X):
             if Link_mat[i][j] == 1:
                 Graph_print.add_edge(i, j)
     #plt.plot(121)
-    nx.draw(Graph_print, node_color = node_col, edge_color = edge_col, with_labels=True, font_weight='bold')
+    nx.draw(Graph_print, node_color = node_col, with_labels=True, font_weight='bold')
     plt.show()
 
 #Link_mat = [[1 for i in range(10)] for _ in range(10)]
