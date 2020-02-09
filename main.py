@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from generation_matrice import gen_matrix, w
 from page_ranking import *
 
-N = 30
+N = 10
 l = 0.5
 mu = 0.2
 dt = 0.1
@@ -15,7 +15,16 @@ X = [i for i in range(0, 11)]
 Y = [i for i in range(0, 11)]
 Yerr = []
 Xvacc = [True for i in range(N)]
-graph = gen_matrix(N, w)
+graph = np.array([[0., 1., 0., 1., 1., 0., 1., 1., 0., 1.],
+       [1., 0., 0., 1., 1., 0., 0., 1., 0., 1.],
+       [0., 0., 0., 1., 1., 0., 1., 1., 0., 1.],
+       [1., 1., 1., 0., 1., 0., 0., 0., 0., 0.],
+       [1., 1., 1., 1., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 1., 1., 0., 1.],
+       [1., 0., 1., 0., 0., 1., 0., 1., 0., 1.],
+       [1., 1., 1., 0., 0., 1., 1., 0., 0., 1.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1.],
+       [1., 1., 1., 0., 0., 1., 1., 1., 1., 0.]])
 
 graph_copie = np.zeros((N, N))
 for i in range(N):
@@ -27,20 +36,21 @@ for i in range(N):
     for j in range(N):
         graph_copi[i][j] = graph[i][j]
 ##plus_grand_degres(graph, 10, Xvacc)
-##page_ranking(graph_copie, 10, Xvacc)
+page_ranking(graph, 10, Xvacc)
+print(Xvacc)
         
-Xm = [True for _ in range(N)]
-
-for i in range(len(X)):
-    print(i)
-    #res = main_glouton(N, ntests, l*dt, mu*dt, graph, Xm)
-    res = main(N, ntests, l*dt, mu*dt, graph, X[i])
-    Y[i] = res[0]
-    Sn = res[1]
-    Snp = 2.58 * np.sqrt(Sn)/np.sqrt(ntests)
-    Yerr.append(Snp)
-
-plt.errorbar(X, Y, yerr = Yerr)
+##Xm = [True for _ in range(N)]
+##
+##for i in range(len(X)):
+##    print(i)
+##    #res = main_glouton(N, ntests, l*dt, mu*dt, graph, Xm)
+##    res = main(N, ntests, l*dt, mu*dt, graph, X[i])
+##    Y[i] = res[0]
+##    Sn = res[1]
+##    Snp = 2.58 * np.sqrt(Sn)/np.sqrt(ntests)
+##    Yerr.append(Snp)
+##
+##plt.errorbar(X, Y, yerr = Yerr)
         
 ##Y1 = [86.047, 85.098, 84.931, 83.831, 82.651, 82.195, 80.791, 79.426, 78.01, 76.675, 74.667]
 ##Yerr1 = [2.2362704071762867, 2.385403919093871, 2.4447692166510113, 2.464653556797872, 2.4746756629842244, 2.393568349584861, 2.408455833026963, 2.426152167933742, 2.3241591727848605, 2.2685485348565897, 2.1646652018045645]
@@ -53,6 +63,8 @@ plt.errorbar(X, Y, yerr = Yerr)
 ##plt.errorbar(X, Y1, Yerr1, label = "Glouton")
 ##plt.errorbar(X, Y2, Yerr2, label = "plus grand degre")
 ##plt.errorbar(X, Y3, Yerr3, label = "page ranking")
+##plt.xlabel("Nombre de personnes vaccinées")
+##plt.ylabel("Temps d'exctinction")
 ##plt.legend()
 
-plt.show()
+##plt.show()
