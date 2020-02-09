@@ -30,6 +30,18 @@ X_test = [True for i in range(N)]
 
 affiche_graph(graph_circulaire, X_test)
 
+page_ranking(graph_circulaire, 6, X_test)
+print(len(X_test), X_test)
+
+affiche_graph(graph_circulaire, X_test)
+
+graph_ligne =  np.zeros((N,N))
+for i in range(N):
+    if (i!=N-1):
+        graph_ligne[i][i+1] = 1
+
+affiche_graph(graph_ligne, X_test)
+
 graph_copie = np.zeros((N, N))
 for i in range(N):
     for j in range(N):
@@ -46,7 +58,7 @@ Xm = [True for _ in range(N)]
 
 #for i in range(len(X)):
 #    print(i)
-    #res = main_glouton(N, ntests, l*dt, mu*dt, graph, Xm)
+#    #res = main_glouton(N, ntests, l*dt, mu*dt, graph, Xm)
 #    res = main(N, ntests, l*dt, mu*dt, graph, X[i])
 #    Y[i] = res[0]
 #    Sn = res[1]
@@ -68,4 +80,4 @@ Xm = [True for _ in range(N)]
 ##plt.errorbar(X, Y3, Yerr3, label = "page ranking")
 ##plt.legend()
 
-plt.show()
+#plt.show()

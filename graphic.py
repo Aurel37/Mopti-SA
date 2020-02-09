@@ -5,20 +5,26 @@ import numpy as np
 
 
 
-def affiche_graph(Link_mat,X):
+def affiche_graph(Link_mat, X):
     n = len(Link_mat)
     Graph_print = nx.Graph()
-    node_col = ['green' if not i else 'red' for i in X]
-    edge_col = ['red' for i in X]
+    node_col = []
+    for i in X:
+        if i:
+            node_col.append('red')
+        else:
+            node_col.append('green')
+    print('size', len(node_col))
+    edge_col = []
     for i in range(n):
         for j in range(n):
             if X[i] or X[j]:
-                edge_col.append('red')
-            else:
                 edge_col.append('green')
+            else:
+                edge_col.append('red')
     for i in range(n):
         for j in range(n):
-            if Link_mat[i][j] == 1:
+            if Link_mat[i][j] == 1 or i==j:
                 Graph_print.add_edge(i, j)
     #plt.plot(121)
     nx.draw(Graph_print, node_color = node_col, with_labels=True, font_weight='bold')
