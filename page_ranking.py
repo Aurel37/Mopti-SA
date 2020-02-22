@@ -64,12 +64,15 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
     u0 = [1 for i in range(n)]
     u1 = [0 for i in range(n)]
     Link_mat_n = normalisation(Link_mat)
-    while (norme(soustraction(u0, u1)) > seuil):
+    compteur = 0
+    while (norme(soustraction(u0, u1)) > seuil and compteur < 10 ):
         #print(soustraction(u0, u1))
         u1 = copie_vect(u0)
         u0 = np.dot(Link_mat_n, u0)
         if norme(u0) != 0:
             u0 = u0/norme(u0)
+        print(u0)
+        compteur += 1
     indice = []
     propre_indice = []
     for i in range(n):

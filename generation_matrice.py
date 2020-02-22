@@ -13,9 +13,16 @@ def gen_vect(n_pop, p_sick):
     return X
 
 
-def w(x,y):
-    return (x+y)/2
+def w(x,y): 
 
+    if min(x,y) <= 1/2 and max(x,y) > 1/2:
+        return 1
+    else:
+        return 0
+    
+
+def w1(x,y):
+    return (x+y)/2
 
 def gen_matrix(n,W):
     """
@@ -26,7 +33,7 @@ def gen_matrix(n,W):
     for i in range(n):
         for j in range(n):
             if i>j:
-                if W(list_proba[i], list_proba[j])<list_proba[i]:
+                if W(list_proba[i], list_proba[j]) >= list_proba[i]:
                     res[i][j] = 1
                     res[j][i] = 1
     return res
@@ -40,6 +47,7 @@ def transition(matrix, X, p_heal, p_infect):
     The function realize one transition of the graph
     """
     n = len(matrix)
+    infected = []
     for i in range(n):
         if (uniform(0,1)<p_heal): # proba de s'auto soigner
             X[i] = False
@@ -50,9 +58,12 @@ def transition(matrix, X, p_heal, p_infect):
                 if (matrix[i][j] > 0 and X[j]): # si on est connecté à qlqn de malade 
                     count_voisin += 1
                     poids += matrix[i][j]
-                        #print(str(poids) + ' = poids, count_voisin =' + str(count_voisin))
             if (count_voisin >0 and uniform(0,1)<p_infect*poids/n):
+                if not X[i]:
+                    infected.append(i)
                 X[i] = True
+    return infected 
+
 
 def vaccin_rand(m, matrix, mu_vaccin):
     n = len(matrix)
