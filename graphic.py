@@ -27,7 +27,7 @@ def affiche_graph(Link_mat, X):
             if Link_mat[i][j] == 1 or i==j:
                 Graph_print.add_edge(i, j)
     #plt.plot(121)
-    nx.draw(Graph_print, node_color = node_col,edge_color = edge_col ,with_labes=True, font_weight='bold')
+    nx.draw_shell(Graph_print, node_color = node_col,edge_color = edge_col ,with_labes=True, font_weight='bold')
     #plt.show()
 
 #Link_mat = [[1 for i in range(10)] for _ in range(10)]
