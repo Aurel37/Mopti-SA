@@ -7,12 +7,9 @@ from graphic import affiche_graph
 
 
 N = 15
-
-N = 10
-
 l = 0.5
-mu = 0.5
-dt = 0.1
+mu = 0.7
+dt = 0.05
 ntests = 10000
 
 graph_etoile = np.array([[0., 0., 1., 1., 1., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1.,
@@ -137,8 +134,10 @@ graph_exemple = np.array([[0., 0., 0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0
        [1., 1., 1., 1., 1., 1., 0., 0., 0., 1., 1., 1., 1., 1., 1., 0.,
         0., 1., 0., 0., 0., 0., 1., 1., 1., 0., 1., 1., 1., 0.]])
 
-graph_alea = gen_matrix(N, w)
+graph_alea = gen_matrix(N, w1)
 Xvacc = [True for i in range(N)]
+affiche_graph(graph_alea, Xvacc, [], [])
+plt.show()
 simulation(N, l*dt, mu*dt, Xvacc, graph_alea)
 ##graph_alea = gen_matrix(N, w)
 ##affiche_graph(graph_alea, Xvacc)

@@ -9,23 +9,19 @@ import matplotlib.pyplot as plt
 def simulation(n_pop, p_heal, p_infect, X, graph):
     healed = False
     counter = 0
-    affiche_graph(graph, X, [])
+    affiche_graph(graph, X, [], [])
     while(not healed):
-        infected = transition(graph, X, p_heal, p_infect)
-        print(infected)
+        infected, node_healed = transition(graph, X, p_heal, p_infect)
         healed = True
         for j in X:
             healed = healed and not j
         counter += 1
         #print(X)
         plt.clf()
-        slow = affiche_graph(graph, X, infected)
-        if slow:
-            plt.pause(0.1)
-        else:
-            plt.pause(10)
-        print('boo')
-    affiche_graph(graph, X, [])
+        if not (len(infected) == 0 and len(node_healed) == 0):
+            affiche_graph(graph, X, infected, node_healed)
+            plt.pause(1)
+    affiche_graph(graph, X, [], [])
     plt.show()
     return counter
 
