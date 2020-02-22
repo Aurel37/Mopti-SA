@@ -78,13 +78,8 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
     u0 = [1 for i in range(n)]
     u1 = [0 for i in range(n)]
     Link_mat_n = normalisation(Link_mat)
-<<<<<<< HEAD
     compteur = 0
     while (norme(soustraction(u0, u1)) > seuil and compteur < 10 ):
-        #print(soustraction(u0, u1))
-=======
-    while (norme(soustraction(u0, u1)) > seuil):
->>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
         u1 = copie_vect(u0)
         u0 = np.dot(Link_mat_n, u0)
         if norme(u0) != 0:
