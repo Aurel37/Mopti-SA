@@ -84,8 +84,6 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
             Link_mat[indice][j] = 0
             Link_mat[j][indice] = 0
 
-    print(vacc)
-
 
 
 def plus_grand_degres(Link_mat, people_vac, X_vac):
@@ -117,7 +115,7 @@ def plus_grand_degres(Link_mat, people_vac, X_vac):
             for j in range(n):
                 if Link_mat[i][j] > 0:
                     deg[i] += 1
-    print(vacc)
+    #print(vacc)
 
 def vaccine(Link_mat, i, X_vac):
     n = len(Link_mat)

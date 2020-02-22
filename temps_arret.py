@@ -1,6 +1,10 @@
 from generation_matrice import gen_matrix, transition, w, uniform, vaccin_rand
 from page_ranking import page_ranking, plus_grand_degres, vaccine
 import numpy as np
+from graphic import affiche_graph
+import matplotlib.pyplot as plt
+
+dt= 1/150
 
 def simulation(n_pop, p_heal, p_infect, X, graph):
     healed = False
@@ -11,7 +15,12 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
         for j in X:
             healed = healed and not j
         counter += 1
-
+        #if (counter+1)%5 == 0:
+        plt.clf()
+        affiche_graph(graph, X)
+        plt.pause(dt)
+    affiche_graph(graph, X)
+    plt.show()
     return counter
 
 
@@ -93,5 +102,4 @@ def main_glouton(N, n_test, p_heal, p_infect, graph, X):
                 var_min = var
     vaccine(graph, i_min, X)
     return temps_min, var
-        
-        
+ 
