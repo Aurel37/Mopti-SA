@@ -139,6 +139,8 @@ Xvacc = [True for i in range(N)]
 affiche_graph(graph_alea, Xvacc, [], [])
 plt.show()
 simulation(N, l*dt, mu*dt, Xvacc, graph_alea)
+affiche_graph(graph_alea, Xvacc, [], [])
+plt.show()
 ##graph_alea = gen_matrix(N, w)
 ##affiche_graph(graph_alea, Xvacc)
 ##

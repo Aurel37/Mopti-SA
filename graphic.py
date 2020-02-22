@@ -44,4 +44,4 @@ def affiche_graph(Link_mat, X, infected, healed):
                 Graph_print.add_edge(i,j)
                 width_edge.append(0)
     # On trace le graphe
-    nx.draw_shell(Graph_print, width = width_edge, node_color = node_col, edge_color = edge_col, with_labels=True, font_weight='bold')
+    nx.draw_circular(Graph_print, width = width_edge, node_color = node_col, edge_color = edge_col, with_labels=True, font_weight='bold')

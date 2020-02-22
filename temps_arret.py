@@ -21,6 +21,8 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
         if not (len(infected) == 0 and len(node_healed) == 0):
             affiche_graph(graph, X, infected, node_healed)
             plt.pause(1)
+            
+    plt.clf()
     affiche_graph(graph, X, [], [])
     plt.show()
     return counter
