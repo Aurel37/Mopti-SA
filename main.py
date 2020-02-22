@@ -1,16 +1,18 @@
 from temps_arret import *
 import numpy as np
-import matplotlib.pyplot as plt
 from generation_matrice import gen_matrix, w, w1
 from page_ranking import *
 from graphic import affiche_graph
 
 
-N = 15
+N = 10
+
+
 l = 0.5
 mu = 0.7
 dt = 0.05
 ntests = 10000
+
 
 graph_etoile = np.array([[0., 0., 1., 1., 1., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1.,
         1., 0., 1., 1., 1., 1., 1., 1., 0., 1., 1., 1., 0., 1.],
@@ -143,17 +145,13 @@ affiche_graph(graph_alea, Xvacc, [], [])
 plt.show()
 ##graph_alea = gen_matrix(N, w)
 ##affiche_graph(graph_alea, Xvacc)
-##
-###### Test pour le  graphe cyclique
-##
+## Test pour le  graphe cyclique
 ##graph_cycle = np.zeros((N, N))
 ##for i in range(N):
 ##    graph_cycle[i][(i+1)%N]=1
 ##    graph_cycle[(i+1)%N][i]=1
-##
-#### toutes les combinaisons possibles de vaccin 
-##vacc = [[0,1], [0, 2], [0, 3], [0, 2, 3], [0, 2, 4], [0, 1, 2], [0, 1, 2, 3], [0, 2, 3, 5], [0, 1, 2, 4]
-##]
+## toutes les combinaisons possibles de vaccin 
+##vacc = [[0,1], [0, 2], [0, 3], [0, 2, 3], [0, 2, 4], [0, 1, 2], [0, 1, 2, 3], [0, 2, 3, 5], [0, 1, 2, 4]]
 ##Xvacc = [True for i in range(N)]
 ##for v in vacc:
 ##    res = main_cycle(N, ntests, l*dt,  mu*dt, graph_cycle, v, Xvacc)
@@ -206,6 +204,3 @@ plt.show()
 ##    Yerr.append(Snp)
 ##
 ##plt.errorbar(X, Y, yerr = Yerr)
-
-
-

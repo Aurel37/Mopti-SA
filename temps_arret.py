@@ -7,6 +7,19 @@ import matplotlib.pyplot as plt
 
 ## Tant que toute la population n'est pas entièrement guérie, on 
 def simulation(n_pop, p_heal, p_infect, X, graph):
+    """
+    DESCRIPTION
+
+    Simulate the propagation of a disease in the graph 'graph' until everybody is cured, and add a graphic visualisation
+
+    VARIABLES
+
+    n_pop : size of the population
+    p_heal : probability to heal
+    p_infect : probability to beinfected
+    X : vector of booleans, the i-th element of this vector represents the state of the i-th individual
+    graph : a matrix to represent the population
+    """
     healed = False
     counter = 0
     affiche_graph(graph, X, [], [])
@@ -28,42 +41,28 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
     return counter
 
 
-def moyenne_ta_alea(n_tests, n_pop, p_heal, p_infect, graph, nb_vacc):
-    s = 0
-    mu_vaccin = 0.5
-    X = vaccin_rand(nb_vacc, graph, mu_vaccin)
-    for i in range(n_tests):
-        s += simulation(n_pop, p_heal, p_infect, X, graph)
-    print("fini ...")
-    return s/n_tests
-
-### On code une fonction propre à chaque méthode car des subtilités sont propres à certaines méthodes
-### Par exemple, on doit boucler deux fois pour la méthode aléatoire car on a de l'aléatoire à deux endroits
-
-
-def main_alea(N, n_test, p_heal, p_infect, graph):
+def main_pg_v1(N, n_test, p_heal, p_infect, graph, nb_vacc, Xm):
     """
-    Main effectue le test sur graph, renvoie la moyenne et variance en fonction du nombre de personne vaccine pour la methode aleatoire
-    """
-    est_moy = 0
-    list_moy = []
-    var = 0
-    for n in range(n_test):
-        m_i = moyenne_ta(n_test, N, p_heal, p_infect, graph)
-        list_moy.append(m_i)
-        est_moy += m_i
-    est_moy = est_moy/n_test
-    for i in range(n_test):
-        var += (list_moy[i] - est_moy)**2
-    var = var/n_test
-    print("fini")
-    return (est_moy, pow(var, 1/2))
+    DESCRIPTION
 
-def main_pg_v1(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
+    uses the first  page_ranking method vaccination on the graph and runs n_test times 'simulation'
+
+    return the variance and mean of theses tests
+
+    VARIABLES
+
+    N : size of population
+    n_test : number of tests
+    p_heal : probability to be healed
+    p_infect : probability to be infected
+    graph : the graph that represents the population
+    nb_vacc : number of people vaccinated
+    Xm : vector of booleans, the i-th element of this vector represents the state of the i-th individual
+    """
     est_moy = 0
     list_el = []
     var = 0
-    graph_copie = np.zeros((N,N))
+    graph_copie = np.zeros((N, N))
     for i in range(N):
         for j in range(N):
             graph_copie[i][j] = graph[i][j]
@@ -80,15 +79,33 @@ def main_pg_v1(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
     var = var/n_test
     return est_moy, var,  X_save
 
-def main_pg_v2(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
+
+def main_pg_v2(N, n_test, p_heal, p_infect, graph, nb_vacc, Xm):
+    """
+    DESCRIPTION
+
+    uses the second  page_ranking method vaccination on the graph and runs n_test times 'simulation'
+
+    return the variance and mean of theses tests
+
+    VARIABLES
+
+    N : size of population
+    n_test : number of tests
+    p_heal : probability to be healed
+    p_infect : probability to be infected
+    graph : the graph that represents the population
+    nb_vacc : number of people vaccinated
+    Xm : vector of booleans, the i-th element of this vector represents the state of the i-th individual
+    """
+
     est_moy = 0
     list_el = []
     var = 0
-    graph_copie = np.zeros((N,N))
+    graph_copie = np.zeros((N, N))
     for i in range(N):
         for j in range(N):
             graph_copie[i][j] = graph[i][j]
-            
     page_ranking(graph, 1, Xm, 0.1)
     X_save = [Xm[i] for i in range(N)]
     for n in range(n_test):
@@ -103,7 +120,26 @@ def main_pg_v2(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
     var = var/n_test
     return est_moy, var,  X_save
 
+
 def main_pgd(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
+    """
+    DESCRIPTION
+
+    uses the 'plus_grand_degres' method vaccination on the graph and runs n_test times 'simulation' 
+
+    return the variance and mean of theses tests
+
+    VARIABLES
+
+    N : size of population
+    n_test : number of tests
+    p_heal : probability to be healed
+    p_infect : probability to be infected
+    graph : the graph that represents the population
+    nb_vacc : number of people vaccinated
+    Xm : vector of booleans, the i-th element of this vector represents the state of the i-th individual
+    """
+
     est_moy = 0
     list_el = []
     var = 0
@@ -111,7 +147,6 @@ def main_pgd(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
     for i in range(N):
         for j in range(N):
             graph_copie[i][j] = graph[i][j]
-            
     plus_grand_degres(graph, 1, Xm, 0.1)
     X_save = [Xm[i] for i in range(N)]
     for n in range(n_test):
@@ -124,6 +159,7 @@ def main_pgd(N,n_test, p_heal, p_infect, graph, nb_vacc, Xm):
         var += (list_el[i] - est_moy)**2
     var = var/n_test
     return est_moy, var,  X_save
+
 
 def main_glouton(N, n_test, p_heal, p_infect, graph, X):
     temps_min = 100000000
@@ -157,11 +193,28 @@ def main_glouton(N, n_test, p_heal, p_infect, graph, X):
                 var_min = var
     vaccine(graph, i_min, X)
     return temps_min, var, X
-        
 
 ## on teste l'influence d'une vaccination particulière (vacc ici), cela sert pour le cycle
 ## car on gènere à la main les différrentes vaccinations possibles 
 def main_cycle(N,n_test, p_heal, p_infect, graph, vacc, Xm):
+    """
+    DESCRIPTION
+
+    uses the page_ranking method vaccination on the graph and runs n_test times 'si 
+
+    return the variance and mean of theses tests
+
+    VARIABLES
+
+    N : size of population
+    n_test : number of tests
+    p_heal : probability to be healed
+    p_infect : probability to be infected
+    graph : the graph that represents the population
+    nb_vacc : number of people vaccinated
+    Xm : vector of booleans, the i-th element of this vector represents the state of the i-th individual
+    """
+
     est_moy = 0
     list_el = []
     var = 0
@@ -169,11 +222,9 @@ def main_cycle(N,n_test, p_heal, p_infect, graph, vacc, Xm):
     for i in range(N):
         for j in range(N):
             graph_copie[i][j] = graph[i][j]
-            
     X = [Xm[i] for i in range(len(Xm))]
     for i in vacc:
         vaccine(graph_copie, i, X)
-    
     X_save = [X[i] for i in range(N)]
     for n in range(n_test):
         X = [X_save[i] for i in range(N)]
@@ -185,4 +236,3 @@ def main_cycle(N,n_test, p_heal, p_infect, graph, vacc, Xm):
         var += (list_el[i] - est_moy)**2
     var = var/n_test
     return est_moy, var,  X_save
-
