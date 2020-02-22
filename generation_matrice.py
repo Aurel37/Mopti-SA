@@ -48,9 +48,14 @@ def transition(matrix, X, p_heal, p_infect):
     """
     n = len(matrix)
     infected = []
+    node_healed = []
     for i in range(n):
-        if (uniform(0,1)<p_heal): # proba de s'auto soigner
+        # proba de s'auto soigner
+        if (uniform(0,1)<p_heal):
+            if X[i]:
+                node_healed.append(i)
             X[i] = False
+            
         else:
             count_voisin = 0 # nombre de voisin malade 
             poids = 0 # poids des voisins malade 
@@ -62,7 +67,7 @@ def transition(matrix, X, p_heal, p_infect):
                 if not X[i]:
                     infected.append(i)
                 X[i] = True
-    return infected 
+    return infected, node_healed
 
 
 def vaccin_rand(m, matrix, mu_vaccin):
