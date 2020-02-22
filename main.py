@@ -5,7 +5,13 @@ from generation_matrice import gen_matrix, w, w1
 from page_ranking import *
 from graphic import affiche_graph
 
+<<<<<<< HEAD
 N = 15
+=======
+
+N = 10
+
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
 l = 0.5
 mu = 0.5
 dt = 0.1
@@ -135,6 +141,7 @@ graph_exemple = np.array([[0., 0., 0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0
 
 graph_alea = gen_matrix(N, w)
 Xvacc = [True for i in range(N)]
+<<<<<<< HEAD
 simulation(N, l*dt, mu*dt, Xvacc, graph_alea)
 ##graph_alea = gen_matrix(N, w)
 ##affiche_graph(graph_alea, Xvacc)
@@ -184,6 +191,54 @@ simulation(N, l*dt, mu*dt, Xvacc, graph_alea)
 ##Y = [i for i in range(0, 11)]
 ##Yerr = []
 ##Xvacc = [True for i in range(N)]
+=======
+#graph = np.array([[0., 1., 0., 1., 1., 0., 1., 1., 0., 1.],
+#       [1., 0., 0., 1., 1., 0., 0., 1., 0., 1.],
+#       [0., 0., 0., 1., 1., 0., 1., 1., 0., 1.],
+#       [1., 1., 1., 0., 1., 0., 0., 0., 0., 0.],
+#       [1., 1., 1., 1., 0., 0., 0., 0., 0., 0.],
+#       [0., 0., 0., 0., 0., 0., 1., 1., 0., 1.],
+#       [1., 0., 1., 0., 0., 1., 0., 1., 0., 1.],
+#       [1., 1., 1., 0., 0., 1., 1., 0., 0., 1.],
+#       [0., 0., 0., 0., 0., 0., 0., 0., 0., 1.],
+#       [1., 1., 1., 0., 0., 1., 1., 1., 1., 0.]])
+graph = gen_matrix(N, w)
+graph_circulaire = np.zeros((N,N))
+for i in range(N): 
+        if (i!=N-1):
+            graph_circulaire[i][i+1] = 1
+            graph_circulaire[i+1][i] = 1
+        elif (i==N-1):
+            graph_circulaire[i][0] = 1
+            graph_circulaire[0][i] = 1
+
+X_test = [True for i in range(N)]
+
+affiche_graph(graph_circulaire, X_test)
+
+page_ranking(graph_circulaire, 6, X_test)
+print(len(X_test), X_test)
+
+affiche_graph(graph_circulaire, X_test)
+
+
+
+
+graph_copie = np.zeros((N, N))
+for i in range(N):
+    for j in range(N):
+        graph_copie[i][j] = graph[i][j]
+
+graph_copi = np.zeros((N, N))
+for i in range(N):
+    for j in range(N):
+        graph_copi[i][j] = graph[i][j]
+##plus_grand_degres(graph, 10, Xvacc)
+
+##page_ranking(graph_copie, 10, Xvacc)
+
+
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
 ##Xm = [True for _ in range(N)]
 ##
 ##for i in range(len(X)):
@@ -201,6 +256,31 @@ simulation(N, l*dt, mu*dt, Xvacc, graph_alea)
 ##    Yerr.append(Snp)
 ##
 ##plt.errorbar(X, Y, yerr = Yerr)
+<<<<<<< HEAD
+=======
+
+
+Xm = [True for _ in range(N)]
+
+#for i in range(len(X)):
+#    print(i)
+#    #res = main_glouton(N, ntests, l*dt, mu*dt, graph, Xm)
+simulation(N, l*dt, mu*dt, Xm, graph)
+#    Y[i] = res[0]
+#    Sn = res[1]
+#    Snp = 2.58 * np.sqrt(Sn)/np.sqrt(ntests)
+#    Yerr.append(Snp)
+
+#plt.errorbar(X, Y, yerr = Yerr)
+
+
+##Y1 = [86.047, 85.098, 84.931, 83.831, 82.651, 82.195, 80.791, 79.426, 78.01, 76.675, 74.667]
+##Yerr1 = [2.2362704071762867, 2.385403919093871, 2.4447692166510113, 2.464653556797872, 2.4746756629842244, 2.393568349584861, 2.408455833026963, 2.426152167933742, 2.3241591727848605, 2.2685485348565897, 2.1646652018045645]
+##
+##Y2 =  [86.047, 84.873, 85.341, 84.091, 82.267, 82.64, 81.303, 81.808, 81.397, 78.468, 79.551]
+##Yerr2 = [2.2362704071762867, 2.222416359399023, 2.35655668914448, 2.292911361294107, 2.2962401650307402, 2.170941456087655, 2.169317009330907, 2.3165772962865723, 2.2143997232325523, 2.021246783707126, 2.05762626468064]
+##Y3 = [86.649, 86.322, 84.308, 83.624, 81.888, 81.932, 80.136, 80.579, 80.626, 80.773, 77.9]
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
 ##
 ##plt.show()
 ##

@@ -1,8 +1,11 @@
 import numpy as np
 
-from generation_matrice import gen_matrix, w
 
 def soustraction(u0, u1):
+    """
+    u0, u1, two vectors
+    return the vector (u0-u1)
+    """
     n = len(u0)
     res = []
     for i in range(n):
@@ -11,6 +14,9 @@ def soustraction(u0, u1):
 
 
 def copie_vect(u):
+    """
+    copy the vector u
+    """
     res = []
     for i in u:
         res.append(i)
@@ -18,6 +24,9 @@ def copie_vect(u):
 
 
 def norme(u):
+    """
+    return the norm of the vector u
+    """
     res = 0
     n = len(u)
     for i in range(n):
@@ -26,6 +35,9 @@ def norme(u):
 
 
 def somme_colonne_i(A, i):
+    """
+    return the sum of the i-th line of A
+    """
     res = 0
     n = len(A)
     for k in range(n):
@@ -34,6 +46,9 @@ def somme_colonne_i(A, i):
 
 
 def normalisation(A):
+    """
+    normalisation of the matrix A
+    """
     n = len(A)
     RES = np.zeros((n, n))
     for i in range(n):
@@ -59,14 +74,17 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
     the vertex i turns to False
     seuil : a float mesure
     """
-    #print(Link_mat)
     n = len(Link_mat)
     u0 = [1 for i in range(n)]
     u1 = [0 for i in range(n)]
     Link_mat_n = normalisation(Link_mat)
+<<<<<<< HEAD
     compteur = 0
     while (norme(soustraction(u0, u1)) > seuil and compteur < 10 ):
         #print(soustraction(u0, u1))
+=======
+    while (norme(soustraction(u0, u1)) > seuil):
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
         u1 = copie_vect(u0)
         u0 = np.dot(Link_mat_n, u0)
         if norme(u0) != 0:
@@ -87,9 +105,6 @@ def page_ranking(Link_mat, people_vac, X_vac, seuil=0.1):
             Link_mat[indice][j] = 0
             Link_mat[j][indice] = 0
 
-    print(vacc)
-
-
 
 def plus_grand_degres(Link_mat, people_vac, X_vac):
     n = len(Link_mat)
@@ -104,12 +119,10 @@ def plus_grand_degres(Link_mat, people_vac, X_vac):
         maxi = - 1
         imax = - 1
         for i in range(n):
-            if not i in vacc:
+            if i not in vacc:
                 if deg[i] > maxi:
                     imax = i
                     maxi = deg[i]
-
-                    
         vacc.append(imax)
         for j in range(n):
             X_vac[imax] = False
@@ -120,7 +133,7 @@ def plus_grand_degres(Link_mat, people_vac, X_vac):
             for j in range(n):
                 if Link_mat[i][j] > 0:
                     deg[i] += 1
-    print(vacc)
+
 
 def vaccine(Link_mat, i, X_vac):
     n = len(Link_mat)

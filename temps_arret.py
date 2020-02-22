@@ -3,6 +3,11 @@ from page_ranking import page_ranking, plus_grand_degres, vaccine
 import numpy as np
 from graphic import affiche_graph
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
+=======
+
+dt= 1/150
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
 
 
 ## Tant que toute la population n'est pas entièrement guérie, on 
@@ -17,6 +22,7 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
         for j in X:
             healed = healed and not j
         counter += 1
+<<<<<<< HEAD
         #print(X)
         plt.clf()
         slow = affiche_graph(graph, X, infected)
@@ -26,6 +32,13 @@ def simulation(n_pop, p_heal, p_infect, X, graph):
             plt.pause(10)
         print('boo')
     affiche_graph(graph, X, [])
+=======
+        #if (counter+1)%5 == 0:
+        plt.clf()
+        affiche_graph(graph, X)
+        plt.pause(dt)
+    affiche_graph(graph, X)
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2
     plt.show()
     return counter
 
@@ -158,6 +171,7 @@ def main_glouton(N, n_test, p_heal, p_infect, graph, X):
                 temps_min = est_moy
                 var_min = var
     vaccine(graph, i_min, X)
+<<<<<<< HEAD
     print(i_min)
     return temps_min, var, X
         
@@ -188,3 +202,7 @@ def main_cycle(N,n_test, p_heal, p_infect, graph, vacc, Xm):
         var += (list_el[i] - est_moy)**2
     var = var/n_test
     return est_moy, var,  X_save
+=======
+    return temps_min, var
+ 
+>>>>>>> d4f8d17e90c5320af4d1fe014cf8a59c98b66be2

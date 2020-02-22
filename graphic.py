@@ -1,5 +1,5 @@
 import networkx as nx
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import generation_matrice as gen
 import numpy as np
 
@@ -24,7 +24,6 @@ def affiche_graph(Link_mat, X, infected):
                 edge_col.append('red')
             else:
                 edge_col.append('green')
-
     # On traduit en graphe la magrice d'adjacence 
     for i in range(n):
         for j in range(n):
